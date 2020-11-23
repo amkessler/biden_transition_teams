@@ -3,27 +3,34 @@ library(httr)
 library(rvest) 
 
 
-
+#set url for transition list page
 url <- 'https://buildbackbetter.com/the-transition/agency-review-teams/'
 
-website1 <- GET(url) #it also gets the cookies that httr will mantain
-#cookies(r)
+#perform the GET call
+website1 <- GET(url) 
+
+#let's see what we have in content
 print(content(website1))
 
 
-# 2. Getting information from a website with html_nodes from the rvest package
-# We get the webpage title and tables with html_nodes and labels such as h3 which was used for the title of the website and table used for the tables.
+# Getting information from a website with html_nodes from the rvest package
+# We get the webpage title and tables with html_nodes and labels such as h2
+# which was used for the title of the website and table used for the tables.
 
+#grab the titles of all tables
 titles <- html_nodes(content(website1), "h2")
-print(html_text(titles)[[1]])
+#show them all
 print(html_text(titles))
-## [1] "Noviembre - 2017"
+#show just one
+print(html_text(titles)[[1]])
+
+#see how many tables this captures
 tbls <- html_nodes(content(website1), "table")
 print(length(tbls))
-## [1] 6
+#looks like all of them
 
-# We can see that there are 6 tables. But through trial and error I find that my table of interest is table 2.
 
+#grab the DATA inside the tables
 tbl2<-html_table(tbls[[2]],fill=TRUE)
 print(tbl2)
 ##    X1     X2    X3  X4     X5    X6   X7     X8    X9  X10    X11   X12

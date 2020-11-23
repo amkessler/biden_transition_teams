@@ -64,6 +64,14 @@ transition_data_scraped <- map_df(num_sequence, scrape_table)
 
 transition_data_scraped
 
+#add a unique ID field string
+transition_data_scraped <- transition_data_scraped %>% 
+  mutate(
+    idstring = str_trim(paste0(name, most_recent_employment, agency))
+  )
+
+
+
 #save results
 saveRDS(transition_data_scraped, "processed_data/transition_data_scraped.rds")
 write_xlsx(transition_data_scraped, "processed_data/transition_data_scraped.xlsx")

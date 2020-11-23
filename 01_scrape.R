@@ -69,6 +69,14 @@ saveRDS(transition_data_scraped, "processed_data/transition_data_scraped.rds")
 write_xlsx(transition_data_scraped, "processed_data/transition_data_scraped.xlsx")
 
 
+#save archived copy to use for identifying changes later on
+filestring <- paste0("archived_data/transition_data_archived_", Sys.time(), ".rds")
+filestring <- str_replace_all(filestring, "-", "_")
+filestring <- str_replace_all(filestring, ":", "_")
+filestring <- str_replace(filestring, " ", "t")
+
+saveRDS(transition_data_scraped, filestring)
+
 
 
 

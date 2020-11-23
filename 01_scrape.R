@@ -4,6 +4,49 @@ library(rvest)
 library(janitor)
 
 
+### FUNCTION FOR SCRAPING TABLES ####
+
+#set url for transition list page
+scrape_table <- function(tablenum) {
+
+  url <- 'https://buildbackbetter.com/the-transition/agency-review-teams/'
+  #perform the GET call
+  website1 <- GET(url) 
+  #grab the titles of all tables
+  titles <- html_nodes(content(website1), "h2")
+  #capture just one
+  title1 <- print(html_text(titles)[[tablenum]])
+  #grab the DATA inside the associated table
+  table1 <- html_table(tbls[[tablenum]], fill=TRUE)
+  #add the name of the table itself as a new column and clean the column names
+  table1 <- table1 %>% 
+    as_tibble() %>% 
+    clean_names() %>% 
+    mutate(
+      agency = title1
+    ) %>% 
+    select(agency, everything())
+  
+  return(table1)
+
+}
+
+
+scrape_table(1)
+
+
+
+
+
+
+
+
+
+
+
+
+### STEP BY STEP FOR ONCE ####
+
 #set url for transition list page
 url <- 'https://buildbackbetter.com/the-transition/agency-review-teams/'
 

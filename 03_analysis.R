@@ -19,6 +19,11 @@ agencyteams <- transition_data_scraped %>%
 
 agencyteams
 
+#export for sharing
+agencyteams %>% 
+  select(-idstring) %>% 
+  write_xlsx("output/agencyreviewteams.xlsx")
+
 
 #quick counts
 agencyteams %>% 
@@ -41,7 +46,7 @@ agencyteams %>%
 
 
 
-### Compare agency teams with archived to find changes ####
+### COMPARE agency teams with archived to find changes #### -------------------
 
 #load current data
 transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
@@ -54,11 +59,31 @@ transition_data_previous
 #find new records added since previous
 anti_join(transition_data_current, transition_data_previous, by = "idstring")
 
-#compare departments
-transition_data_current %>% 
-  count(agency)
+#compare departments by totals 
+agencycount_current <- transition_data_current %>% 
+  count(agency, name = "current_count")
 
-transition_data_previous %>% 
-  count(agency)
+agencycount_current
+
+agencycount_previous <- transition_data_previous %>% 
+  count(agency, name = "previous_count")
+
+agencycount_previous
+
+#join
+agencycount_compare <- left_join(agencycount_current, agencycount_previous, by = "agency")
+agencycount_compare
+
+#add change columns
+agencycount_compare <- agencycount_compare %>% 
+  mutate(
+    change = current_count - previous_count
+  )
+
+#export for sharing
+write_xlsx(agencycount_compare, "output/agencycount_compare.xlsx")
+
+
+
 
 

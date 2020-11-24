@@ -13,11 +13,17 @@ transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
 transition_data_current
 
 # load archived data to compare against
-transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_24t09_52_05.rds")
+transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_23t16_13_07.rds")
 transition_data_previous
 
 #find new records of names added since previous
-anti_join(transition_data_current, transition_data_previous, by = "idstring")
+newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
+newnames
+
+newnames %>% 
+  select(-idstring) %>% 
+  write_xlsx("output/newnames.xlsx")
+
 
 
 #compare totals by department 
@@ -46,12 +52,13 @@ write_xlsx(agencycount_compare, "output/agencycount_compare.xlsx")
 
 
 
+
 #### Analysis ############
 
 #we'll create a newly named object to use from here on out 
 agencyteams <- transition_data_current
 
-#export for sharing
+#export for sharing, take out the long idstring that won't be needed by others
 agencyteams %>% 
   select(-idstring) %>% 
   write_xlsx("output/agencyreviewteams.xlsx")

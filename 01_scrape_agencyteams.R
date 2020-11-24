@@ -70,6 +70,14 @@ transition_data_scraped <- transition_data_scraped %>%
     idstring = str_trim(paste0(name, most_recent_employment, agency))
   )
 
+#some names have title after denoting they are the team lead
+#we'll capture that and remove title from name field
+transition_data_scraped <- transition_data_scraped %>% 
+  mutate(
+    team_lead = if_else(str_detect(name, "Team Lead"), "Y", ""),
+    name = str_remove(name, ", Team Lead")
+  ) %>% 
+  select(agency, name, team_lead, everything())
 
 
 #save results

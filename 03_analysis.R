@@ -2,11 +2,18 @@ library(tidyverse)
 library(janitor)
 library(writexl)
 
+#to run new scrape(s), uncomment out one or both of these lines
+#otherwise can leave commented out and use existing saved datasets
+
+source("01_scrape_agencyteams.R")
+# source("02_scrape_nominees.R")
+
+
 
 #### AGENCY TEAMS ##### --------------------------------------------------------
 
 
-### COMPARE agency teams with previous version to find changes ######
+### COMPARE agency team members with previous archived version ######
 
 #load current data
 transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
@@ -19,11 +26,9 @@ transition_data_previous
 
 #find new records of names added since previous
 newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
-newnames 
 
-newnames %>% 
-  select(-idstring) %>% 
-  write_xlsx("output/newnames.xlsx")
+newnames %>% View()
+
 
 
 transition_data_current %>% 
@@ -34,7 +39,7 @@ transition_data_previous %>%
 
 
 
-#compare totals by department #######
+# Compare totals by department #######
 agencycount_current <- transition_data_current %>% 
   count(agency, name = "current_count")
 
@@ -55,21 +60,13 @@ agencycount_compare <- agencycount_compare %>%
     change = current_count - previous_count
   )
 
-#export for sharing
-write_xlsx(agencycount_compare, "output/agencycount_compare.xlsx")
 
 
 
-
-#### Analysis ############
+#### Analysis of current agency team members ############
 
 #we'll create a newly named object to use from here on out 
 agencyteams <- transition_data_current
-
-#export for sharing, take out the long idstring that won't be needed by others
-agencyteams %>% 
-  select(-idstring) %>% 
-  write_xlsx("output/agencyreviewteams.xlsx")
 
 
 #quick counts
@@ -91,4 +88,20 @@ employers_count
 agencyteams %>% 
   filter(most_recent_employment == "Georgetown University") 
 
+
+
+### EXPORTS FOR SHARING #### ----------------
+
+#names of new agency review team members
+newnames %>% 
+  select(-idstring) %>% 
+  write_xlsx("output/newnames.xlsx")
+
+#aggregate county of agency totals compared
+write_xlsx(agencycount_compare, "output/agencycount_compare.xlsx")
+
+#entire combined agency teams file
+agencyteams %>% 
+  select(-idstring) %>% 
+  write_xlsx("output/agencyreviewteams.xlsx")
 

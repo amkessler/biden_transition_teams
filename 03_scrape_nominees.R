@@ -30,17 +30,18 @@ print(content(website1))
 #grab the names
 names <- html_nodes(content(website1), "h3")
 #show them all
-print(html_text(names))
+print(html_text(names, trim = TRUE))
 #show just one
-name1 <- print(html_text(names)[[1]])
+name1 <- print(html_text(names, trim = TRUE)[[1]])
 name1
+
 
 #grab the titles
 titles <- html_nodes(content(website1), "h4")
 #show them all
-print(html_text(titles))
+print(html_text(titles, trim = TRUE))
 #show just one
-title1 <- print(html_text(titles)[[1]])
+title1 <- print(html_text(titles, trim = TRUE)[[1]])
 title1
 
 

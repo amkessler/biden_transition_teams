@@ -32,5 +32,7 @@ agencyteams %>%
 count_of_employment <- agencyteams %>% 
   count(most_recent_employment, sort = TRUE)
 count_of_employment
-
 #note: the employment field likely needs to be standardized...Deliotte, etc
+
+agencyteams %>% 
+  filter(most_recent_employment == "Georgetown University") %>% View()

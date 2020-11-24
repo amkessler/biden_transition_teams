@@ -115,11 +115,15 @@ saveRDS(nominees_data_scraped, "processed_data/nominees_data_scraped.rds")
 write_xlsx(nominees_data_scraped, "processed_data/nominees_data_scraped.xlsx")
 
 #save archived copy to use for identifying changes later on
-filestring <- paste0("archived_data/nominees_data_archived", Sys.time(), ".rds")
+filestring <- paste0("archived_data/nominees_data_archived_", Sys.time())
 filestring <- str_replace_all(filestring, "-", "_")
 filestring <- str_replace_all(filestring, ":", "_")
 filestring <- str_replace(filestring, " ", "t")
-
+#remove seconds for clarity
+filestring <- str_sub(filestring, 1, -4L)
+#add file extension
+filestring <- paste0(filestring, ".rds")
+#run the string through and save the file
 saveRDS(nominees_data_scraped, filestring)
 
 
@@ -194,12 +198,14 @@ saveRDS(staff_data_scraped, "processed_data/staff_data_scraped.rds")
 write_xlsx(staff_data_scraped, "processed_data/staff_data_scraped.xlsx")
 
 #save archived copy to use for identifying changes later on
-filestring <- paste0("archived_data/staff_data_archived", Sys.time(), ".rds")
+filestring <- paste0("archived_data/staff_data_archived_", Sys.time())
 filestring <- str_replace_all(filestring, "-", "_")
 filestring <- str_replace_all(filestring, ":", "_")
 filestring <- str_replace(filestring, " ", "t")
-
-saveRDS(nominees_data_scraped, filestring)
-
-
+#remove seconds for clarity
+filestring <- str_sub(filestring, 1, -4L)
+#add file extension
+filestring <- paste0(filestring, ".rds")
+#run the string through and save the file
+saveRDS(staff_data_scraped, filestring)
 

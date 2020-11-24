@@ -2,9 +2,11 @@ library(tidyverse)
 library(janitor)
 library(writexl)
 
+
+#### AGENCY TEAMS ##### --------------------------
+
 #load saved data from step 01
 transition_data_scraped <- readRDS("processed_data/transition_data_scraped.rds")
-
 
 #some names have title after denoting they are the team lead
 #we'll capture that and remove title from name field
@@ -35,4 +37,28 @@ count_of_employment
 #note: the employment field likely needs to be standardized...Deliotte, etc
 
 agencyteams %>% 
-  filter(most_recent_employment == "Georgetown University") %>% View()
+  filter(most_recent_employment == "Georgetown University") 
+
+
+
+### Compare agency teams with archived to find changes ####
+
+#load current data
+transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
+transition_data_current
+
+# load archived data to compare against
+transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_24t09_52_05.rds")
+transition_data_previous
+
+#find new records added since previous
+anti_join(transition_data_current, transition_data_previous, by = "idstring")
+
+#compare departments
+transition_data_current %>% 
+  count(agency)
+
+transition_data_previous %>% 
+  count(agency)
+
+

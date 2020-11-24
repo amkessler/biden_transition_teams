@@ -190,8 +190,8 @@ staff_data_scraped
 
 
 # SAVE RESULTS ####
-saveRDS(nominees_data_scraped, "processed_data/nominees_data_scraped.rds")
-write_xlsx(nominees_data_scraped, "processed_data/nominees_data_scraped.xlsx")
+saveRDS(staff_data_scraped, "processed_data/staff_data_scraped.rds")
+write_xlsx(staff_data_scraped, "processed_data/staff_data_scraped.xlsx")
 
 #save archived copy to use for identifying changes later on
 filestring <- paste0("archived_data/staff_data_archived", Sys.time(), ".rds")

@@ -194,7 +194,7 @@ saveRDS(nominees_data_scraped, "processed_data/nominees_data_scraped.rds")
 write_xlsx(nominees_data_scraped, "processed_data/nominees_data_scraped.xlsx")
 
 #save archived copy to use for identifying changes later on
-filestring <- paste0("archived_data/nominees_data_archived", Sys.time(), ".rds")
+filestring <- paste0("archived_data/staff_data_archived", Sys.time(), ".rds")
 filestring <- str_replace_all(filestring, "-", "_")
 filestring <- str_replace_all(filestring, ":", "_")
 filestring <- str_replace(filestring, " ", "t")

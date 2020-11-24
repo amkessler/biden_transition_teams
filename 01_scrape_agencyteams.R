@@ -7,7 +7,7 @@ library(writexl)
 #first we'll capture how many tables on on the page
 
 #set url for transition list page
-myurl <- 'https://buildbackbetter.com/the-transition/agency-review-teams/'
+myurl <- "https://buildbackbetter.gov/the-transition/agency-review-teams/"
 #perform the GET call
 website1 <- GET(myurl) 
 #see how many tables this captures
@@ -22,7 +22,7 @@ num_tables
 #set url for transition list page
 scrape_table <- function(tablenum) {
 
-  url <- 'https://buildbackbetter.com/the-transition/agency-review-teams/'
+  url <- "https://buildbackbetter.gov/the-transition/agency-review-teams/"
   #perform the GET call
   website1 <- GET(url) 
   #grab the titles of all tables
@@ -101,7 +101,7 @@ saveRDS(transition_data_scraped, filestring)
 # ### STEP BY STEP FOR ONCE ####
 # 
 # #set url for transition list page
-# url <- 'https://buildbackbetter.com/the-transition/agency-review-teams/'
+# url <- 'https://buildbackbetter.gov/the-transition/agency-review-teams/'
 # 
 # #perform the GET call
 # website1 <- GET(url) 

@@ -169,7 +169,7 @@ scrape_names_staff(1)
 
 #get length of how many names on the page
 myurl2 <- "https://buildbackbetter.com/the-administration/white-house-senior-staff/"
-website2 <- GET(myurl) 
+website2 <- GET(myurl2) 
 names2 <- html_nodes(content(website2), "h3")
 num_names_staff <- length(html_text(names2, trim = TRUE))
 #we'll use this length to create sequential numbers vector to match

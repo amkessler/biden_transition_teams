@@ -8,10 +8,10 @@ library(writexl)
 myurl <- 'https://buildbackbetter.com/the-administration/nominees-and-appointees/'
 #perform the GET call
 website1 <- GET(myurl) 
-#see how many tables this captures
-tbls <- html_nodes(content(website1), "table")
-num_tables <- length(tbls)
-num_tables
+#determine how many names on the page exist to be captureds
+n <- html_nodes(content(website1), "h3")
+num_names <- length(n)
+num_names
 
 
 
@@ -45,60 +45,52 @@ title1 <- print(html_text(titles, trim = TRUE)[[1]])
 title1
 
 
+#grab the links
+links <- html_nodes(content(website1), "a.full-link")
+#show them all
+html_attr(links, 'href')
+#show just one
+link1 <- html_attr(links, 'href')[[1]]
+link1
+
+
+df <- data.frame("name" = name1, "title" = title1, "link" = link1)
+df
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### FUNCTION FOR SCRAPING TABLES ####
+### FUNCTION FOR SCRAPING NAMES ####
 
 #set url for transition list page
-scrape_table <- function(tablenum) {
-
-  url <- 'https://buildbackbetter.com/the-transition/agency-review-teams/'
+scrape_names <- function(namenum) {
+  #set url for nominees list page
+  url <- 'https://buildbackbetter.com/the-administration/nominees-and-appointees/'
   #perform the GET call
-  website1 <- GET(url) 
-  #grab the titles of all tables
-  titles <- html_nodes(content(website1), "h2")
-  #capture just one
-  title1 <- print(html_text(titles)[[tablenum]])
-  #grab the DATA inside the associated table
-  table1 <- html_table(tbls[[tablenum]], fill=TRUE)
-  #add the name of the table itself as a new column and clean the column names
-  table1 <- table1 %>% 
-    as_tibble() %>% 
-    clean_names() %>% 
-    mutate(
-      agency = title1
-    ) %>% 
-    select(agency, everything())
+  website1 <- GET(url)
+  #grab the names
+  names <- html_nodes(content(website1), "h3")
+  #isolate just one
+  name1 <- print(html_text(names, trim = TRUE)[[1]])
+  name1
   
-  return(table1)
+  
+  #grab the titles
+  titles <- html_nodes(content(website1), "h4")
+  #show them all
+  print(html_text(titles, trim = TRUE))
+  #show just one
+  title1 <- print(html_text(titles, trim = TRUE)[[1]])
+  title1
+  
+  
+  #grab the links
+  links <- html_nodes(content(website1), "a.full-link")
+  #show them all
+  html_attr(links, 'href')
+  #show just one
+  link1 <- html_attr(links, 'href')[[1]]
+  link1
+  
 
 }
 

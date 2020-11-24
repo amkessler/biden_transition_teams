@@ -7,7 +7,7 @@ library(writexl)
 ### STEP BY STEP ####
 
 #set url for nominees list page
-url <- 'https://buildbackbetter.com/the-administration/nominees-and-appointees/'
+url <- "https://buildbackbetter.gov/the-administration/nominees-and-appointees/"
 
 #perform the GET call
 website1 <- GET(url)
@@ -53,7 +53,7 @@ df
 #set url for transition list page
 scrape_names <- function(namenum) {
   #set url for nominees list page
-  url <- 'https://buildbackbetter.com/the-administration/nominees-and-appointees/'
+  url <- "https://buildbackbetter.gov/the-administration/nominees-and-appointees/"
   #perform the GET call
   website1 <- GET(url)
  
@@ -89,7 +89,7 @@ scrape_names(1)
 #we'll use the map function to loop through all the names at once and combine
 
 #get length of how many names on the page
-myurl <- "https://buildbackbetter.com/the-administration/nominees-and-appointees/"
+myurl <- "https://buildbackbetter.gov/the-administration/nominees-and-appointees/"
 website1 <- GET(myurl) 
 names <- html_nodes(content(website1), "h3")
 num_names_nominees <- length(html_text(names, trim = TRUE))
@@ -134,7 +134,7 @@ saveRDS(nominees_data_scraped, filestring)
 #set url for transition list page
 scrape_names_staff <- function(namenum) {
   #set url for nominees list page
-  url <- 'https://buildbackbetter.com/the-administration/white-house-senior-staff/'
+  url <- "https://buildbackbetter.gov/the-administration/white-house-senior-staff/"
   #perform the GET call
   website1 <- GET(url)
   
@@ -168,7 +168,7 @@ scrape_names_staff(1)
 #### LOOP THROUGH ALL NAMES ####
 
 #get length of how many names on the page
-myurl2 <- "https://buildbackbetter.com/the-administration/white-house-senior-staff/"
+myurl2 <- "https://buildbackbetter.gov/the-administration/white-house-senior-staff/"
 website2 <- GET(myurl2) 
 names2 <- html_nodes(content(website2), "h3")
 num_names_staff <- length(html_text(names2, trim = TRUE))

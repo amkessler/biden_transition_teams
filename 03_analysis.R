@@ -13,20 +13,28 @@ transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
 transition_data_current
 
 # load archived data to compare against
-transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_23t16_13_07.rds")
+transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_24t14_00.rds")
+# transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_23t16_13_07.rds")
 transition_data_previous
 
 #find new records of names added since previous
 newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
-newnames
+newnames 
 
 newnames %>% 
   select(-idstring) %>% 
   write_xlsx("output/newnames.xlsx")
 
 
+transition_data_current %>% 
+  count(source_of_funding)
 
-#compare totals by department 
+transition_data_previous %>% 
+  count(source_of_funding)
+
+
+
+#compare totals by department #######
 agencycount_current <- transition_data_current %>% 
   count(agency, name = "current_count")
 

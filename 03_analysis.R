@@ -68,9 +68,9 @@ agencyteams %>%
   count(source_of_funding, sort = TRUE)
 
 
-count_of_employment <- agencyteams %>% 
+employers_count <- agencyteams %>% 
   count(most_recent_employment, sort = TRUE)
-count_of_employment
+employers_count
 #note: the employment field likely needs to be standardized...Deliotte, etc
 
 agencyteams %>% 

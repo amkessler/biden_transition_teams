@@ -94,7 +94,7 @@ agencyteams %>%
 
 #names of new agency review team members
 newnames %>% 
-  select(-idstring) %>% 
+  select(-idstring, -namestring) %>% 
   write_xlsx("output/newnames.xlsx")
 
 #aggregate county of agency totals compared
@@ -102,6 +102,6 @@ write_xlsx(agencycount_compare, "output/agencycount_compare.xlsx")
 
 #entire combined agency teams file
 agencyteams %>% 
-  select(-idstring) %>% 
+  select(-idstring, -namestring) %>% 
   write_xlsx("output/agencyreviewteams.xlsx")
 

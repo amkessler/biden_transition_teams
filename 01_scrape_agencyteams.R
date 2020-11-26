@@ -64,10 +64,23 @@ transition_data_scraped <- map_df(num_sequence, scrape_table)
 
 transition_data_scraped
 
-#add a unique ID field string
+#add a unique ID field string to match new records
+#also another one just for names, which we'll use for people in multiple roles
 transition_data_scraped <- transition_data_scraped %>% 
   mutate(
-    idstring = str_trim(paste0(name, most_recent_employment, agency))
+    idstring = str_trim(paste0(name, most_recent_employment, agency)),
+    namestring = str_trim(paste0(name, most_recent_employment))
+  )
+
+##determine names with multiple roles and flag them in new column
+multiplenames <- transition_data_scraped %>% 
+  count(namestring) %>% 
+  filter(n > 1) %>% 
+  pull(namestring)
+
+transition_data_scraped <- transition_data_scraped %>% 
+  mutate(
+    on_multiple_teams = if_else(namestring %in% multiplenames, "Y", "")
   )
 
 #some names have title after denoting they are the team lead
@@ -77,7 +90,9 @@ transition_data_scraped <- transition_data_scraped %>%
     team_lead = if_else(str_detect(name, "Team Lead"), "Y", ""),
     name = str_remove(name, ", Team Lead")
   ) %>% 
-  select(agency, name, team_lead, everything())
+  select(agency, name, team_lead, on_multiple_teams, everything())
+
+
 
 
 #save results

@@ -84,12 +84,28 @@ The number of people appointed to each agency team, along with change since last
 agencycount_compare %>% 
   filter(change > 0) %>% 
   gt() %>%
-  tab_options(table.align = "left") 
+  tab_options(table.align = "left") %>% 
+ tab_style(
+    style = list(
+      cell_fill(color = "lightcyan"),
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = vars(change)
+      )
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_text(color = "gray")
+      ),
+    locations = cells_body(
+      columns = vars(previous_count)
+      )
+  ) 
   # tab_header(
   #   title = md("Ads Aired by **Party**"),
   #   subtitle = "(From Nov. 4th)"
   # ) %>% 
-
   # cols_align(
   #   align = "center",
   #   columns = vars(team_lead, on_multiple_teams)

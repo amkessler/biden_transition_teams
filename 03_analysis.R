@@ -90,7 +90,19 @@ agencyteams %>%
 
 
 
-### EXPORTS FOR SHARING #### ----------------
+### SAVE RESULTS #### 
+
+#names of new agency review team members
+saveRDS(newnames, "processed_data/newnames.rds")
+
+#aggregate county of agency totals compared
+saveRDS(agencycount_compare, "processed_data/agencycount_compare.rds")
+
+#entire combined agency teams file
+saveRDS(agencyteams, "processed_data/agencyteams.rds")
+
+
+### EXPORT EXCEL FILES FOR SHARING #### ----------------
 
 #names of new agency review team members
 newnames %>% 
@@ -98,7 +110,8 @@ newnames %>%
   write_xlsx("output/newnames.xlsx")
 
 #aggregate county of agency totals compared
-write_xlsx(agencycount_compare, "output/agencycount_compare.xlsx")
+agencycount_compare %>% 
+  write_xlsx("output/agencycount_compare.xlsx")
 
 #entire combined agency teams file
 agencyteams %>% 

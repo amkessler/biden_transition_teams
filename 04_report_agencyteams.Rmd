@@ -29,6 +29,14 @@ newnames <- readRDS("processed_data/newnames.rds")
 agencycount_compare <- readRDS("processed_data/agencycount_compare.rds")
 
 
+#because some people are appointed to one team, we'll want to account
+#for that when looking at top employers, to avoid double/triple counting
+agencyteams %>% 
+  select(namestring, most_recent_employment) %>% 
+  distinct() %>% 
+  count(most_recent_employment, sort = TRUE)
+
+
 ```
 
 ####
@@ -41,7 +49,7 @@ The names below reflect the currently available data as of **`r format(Sys.time(
 ### *New Names*
 
 Here are the new names added to the agency review team lists since last time.  
-Note that some people may already be part of another team and/or assigned to multiple agency teams - they're marked below as appropriate.  
+Note that some people may already be part of another team and/or assigned to multiple agency teams - they're marked below, as applicable.  
   
   
 
@@ -74,9 +82,9 @@ newnames %>%
 
 
 ####
-### *Aggregate Team Totals*
+### *Aggregate Team Changes*
 
-The number of people appointed to each agency team, along with change since last time reflecting the number of new people added. (Agencies with no change are omitted here.)
+The total number of people appointed to each agency team, along with change since last time reflecting the number of new people added. (Agencies with no change are omitted here.)
   
 
 ```{r, echo=FALSE}
@@ -128,6 +136,37 @@ agencycount_compare %>%
 ```
 
 
+####
+### *Largest and Smallest*
+
+The **largest** agency review teams as of today are:
+
+```{r, echo=FALSE}
+
+agencycount_compare %>% 
+  select(agency, current_count) %>% 
+  arrange(desc(current_count)) %>% 
+  head(8) %>% 
+  gt() %>%
+  tab_options(table.align = "left") 
+ 
+
+```
+
+####
+The **smallest** agency review teams (less than five members) as of today are:
+
+```{r, echo=FALSE}
+
+agencycount_compare %>% 
+  select(agency, current_count) %>% 
+  arrange(current_count) %>% 
+  filter(current_count < 5) %>% 
+  gt() %>%
+  tab_options(table.align = "left") 
+ 
+
+```
 
 
 

@@ -29,14 +29,6 @@ newnames <- readRDS("processed_data/newnames.rds")
 agencycount_compare <- readRDS("processed_data/agencycount_compare.rds")
 
 
-#because some people are appointed to one team, we'll want to account
-#for that when looking at top employers, to avoid double/triple counting
-agencyteams %>% 
-  select(namestring, most_recent_employment) %>% 
-  distinct() %>% 
-  count(most_recent_employment, sort = TRUE)
-
-
 ```
 
 ####
@@ -137,7 +129,7 @@ agencycount_compare %>%
 
 
 ####
-### *Largest and Smallest*
+### *Largest and Smallest Overall*
 
 The **largest** agency review teams as of today are:
 
@@ -162,6 +154,32 @@ agencycount_compare %>%
   select(agency, current_count) %>% 
   arrange(current_count) %>% 
   filter(current_count < 5) %>% 
+  gt() %>%
+  tab_options(table.align = "left") 
+ 
+
+```
+
+
+####
+### *Top Companies/Organizations Represented*
+
+Here are the most frequent recent employers of agency review team members. 
+  
+Because some members are on multiple teams, we've accounted for that to count each person only once for employer totals. (E.g. if John Doe works for Google and is on three separate teams, Google gets one person added to its total, not three.)  
+  
+*Currently these employer names have not yet been standardized, so this should be used only for awareness but not reporting rankings publicly.*
+
+```{r, echo=FALSE}
+
+#because some people are appointed to one team, we'll want to account
+#for that when looking at top employers, to avoid double/triple counting
+
+agencyteams %>% 
+  select(namestring, most_recent_employment) %>% 
+  distinct() %>% 
+  count(most_recent_employment, sort = TRUE) %>% 
+  filter(n >= 3) %>% 
   gt() %>%
   tab_options(table.align = "left") 
  

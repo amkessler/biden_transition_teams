@@ -1,0 +1,182 @@
+---
+title: "Biden Transition - Agency Review Teams"
+author: "Aaron Kessler, Data/Investigations Team"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(scales)
+library(gt)
+library(kableExtra)
+options(dplyr.summarise.inform = FALSE)
+
+#run the script for step 03 to update data files
+# source("03_analysis.R")
+
+
+#load data files from step 03
+#entire combined agency teams file
+agencyteams <- readRDS("processed_data/agencyteams.rds")
+#names of new agency review team members
+newnames <- readRDS("processed_data/newnames.rds")
+#aggregate county of agency totals compared
+agencycount_compare <- readRDS("processed_data/agencycount_compare.rds")
+
+
+```
+
+####
+The following is an analysis based on scraping Joe Biden's presidential transition website to capture the various lists of members on the Agency Review Teams.  
+  
+The names below reflect the currently available data as of **`r format(Sys.time(), '%I:%M %p on %b. %d')`**.
+
+
+####
+### *New Names*
+
+Here are the new names added to the agency review team lists since last time.  
+Note that some people may already be part of another team and/or assigned to multiple agency teams - they're marked below as appropriate.  
+  
+  
+
+```{r, echo=FALSE}
+
+newnames %>% 
+  select(agency, name, most_recent_employment, on_multiple_teams, team_lead) %>% 
+  gt() %>%
+  # tab_header(
+  #   title = md("Ads Aired by **Party**"),
+  #   subtitle = "(From Nov. 4th)"
+  # ) %>% 
+  tab_options(table.align = "left") %>%
+  cols_align(
+    align = "center",
+    columns = vars(team_lead, on_multiple_teams)
+  ) # %>%
+  # fmt_number(
+  #   columns = vars(ads_aired),
+  #   decimals = 0,
+  #   use_seps = TRUE
+  # ) %>% 
+  # fmt_currency(
+  #   columns = vars(est_spent),
+  #   decimals = 0,
+  #   currency = "USD"
+ 
+
+```
+
+
+####
+### *Aggregate Team Totals*
+
+The number of people appointed to each agency team, along with change since last time reflecting the number of new people added. (Agencies with no change are omitted here.)
+  
+
+```{r, echo=FALSE}
+
+agencycount_compare %>% 
+  filter(change > 0) %>% 
+  gt() %>%
+  tab_options(table.align = "left") 
+  # tab_header(
+  #   title = md("Ads Aired by **Party**"),
+  #   subtitle = "(From Nov. 4th)"
+  # ) %>% 
+
+  # cols_align(
+  #   align = "center",
+  #   columns = vars(team_lead, on_multiple_teams)
+  # ) # %>%
+  # fmt_number(
+  #   columns = vars(ads_aired),
+  #   decimals = 0,
+  #   use_seps = TRUE
+  # ) %>% 
+  # fmt_currency(
+  #   columns = vars(est_spent),
+  #   decimals = 0,
+  #   currency = "USD"
+ 
+
+```
+
+
+
+
+
+<!-- #### -->
+<!-- ### *Daily Totals* -->
+<!-- ```{r, echo=FALSE} -->
+
+<!-- dailycount_byparty <- ga_runoff_tvads %>%  -->
+<!--   count(airdate, advertiser_party, name = "ad_count") %>%  -->
+<!--   # filter(airdate < "2020-11-23") -->
+
+<!-- #area chart by party -->
+<!-- ggplot(dailycount_byparty, aes(x = airdate, y = ad_count)) +  -->
+<!--   geom_col(aes(color = advertiser_party, fill = advertiser_party),  -->
+<!--             alpha = 0.5, position = position_dodge(preserve = "single")) + -->
+<!--   scale_color_manual(values = c("#00AFBB", "#F2785D")) + -->
+<!--   scale_fill_manual(values = c("#00AFBB", "#F2785D")) + -->
+<!--   labs(title = "Daily Count of Ad Spots, By Party",  -->
+<!--        subtitle = "", -->
+<!--        x = "", -->
+<!--        y = "") + -->
+<!--   theme_minimal() + -->
+<!--   theme(plot.title = element_text(hjust = 0.5)) + -->
+<!--   scale_y_continuous(labels = comma) -->
+
+
+
+<!-- ``` -->
+
+<!-- #### -->
+<!-- ```{r, echo=FALSE} -->
+
+<!-- dailycount_bycand <- ga_runoff_tvads %>%  -->
+<!--   count(airdate, advertiser, name = "ad_count") -->
+
+<!-- #bar chart for CANDIDATES -->
+<!-- ggplot(dailycount_bycand, aes(x = airdate, y = ad_count)) +  -->
+<!--   geom_col(aes(color = advertiser, fill = advertiser),  -->
+<!--            alpha = 0.5, position = position_dodge(preserve = "single")) + -->
+<!--   # scale_color_manual(values = c("#DC3A3A", "#4BAFD8", "#E8857E", "#2E90B8")) + -->
+<!--   # scale_fill_manual(values = c("#DC3A3A", "#4BAFD8", "#E8857E", "#2E90B8")) + -->
+<!--   labs(title = "Daily Count of Ad Spots, By Candidate",  -->
+<!--        subtitle = "", -->
+<!--        x = "", -->
+<!--        y = "") + -->
+<!--   theme_minimal() + -->
+<!--   theme(plot.title = element_text(hjust = 0.5)) + -->
+<!--   scale_y_continuous(labels = comma) -->
+
+
+<!-- ``` -->
+
+
+
+<!-- ```{r, echo=FALSE} -->
+
+
+
+
+<!-- ``` -->
+
+
+
+<!-- ```{r, echo=FALSE} -->
+
+
+
+
+<!-- ``` -->
+
+
+

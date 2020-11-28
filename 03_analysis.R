@@ -89,6 +89,12 @@ agencyteams %>%
   filter(most_recent_employment == "Georgetown University") 
 
 
+#create lookup table to use for employer standardization
+forlookup <- agencyteams %>% 
+  count(most_recent_employment)
+
+
+
 
 ### SAVE RESULTS #### 
 
@@ -118,3 +124,6 @@ agencyteams %>%
   select(-idstring, -namestring) %>% 
   write_xlsx("output/agencyreviewteams.xlsx")
 
+#lookup file to standarize separately
+forlookup %>% 
+  write_csv("output/forlookup.csv")

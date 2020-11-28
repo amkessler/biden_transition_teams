@@ -104,16 +104,17 @@ standardization_lookup <- read_excel("processed_data/agencyreviewteam_standardiz
 agencyteams <- left_join(agencyteams, standardization_lookup, by = "most_recent_employment")
 
 #move new columns further left
-agencyteams %>% 
+agencyteams <- agencyteams %>% 
   select(1:5,
          most_recent_employment_standardized,
+         employment_retired_indicated,
+         everything())
         
-                   
-
 #flag if any didn't join
 agencyteams %>% 
   filter(is.na(most_recent_employment_standardized))
   
+
 
 ### SAVE RESULTS #### 
 

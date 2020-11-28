@@ -126,4 +126,4 @@ agencyteams %>%
 
 #lookup file to standarize separately
 forlookup %>% 
-  write_csv("output/forlookup.csv")
+  write_xlsx("output/forlookup.csv")

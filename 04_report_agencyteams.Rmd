@@ -167,18 +167,18 @@ agencycount_compare %>%
 Here are the most frequent recent employers of agency review team members. 
   
 Because some members are on multiple teams, we've accounted for that to count each person only once for employer totals. (E.g. if John Doe works for Google and is on three separate teams, Google gets one person added to its total, not three.)  
-  
-*Currently these employer names have not yet been standardized, so this should be used only for awareness but not reporting rankings publicly.*
 
+*The initial attempt to standardize these names has been completed, though still some additional checks to do. So please for now still use this for awareness but don't yet report publicly.*
+  
 ```{r, echo=FALSE}
 
 #because some people are appointed to one team, we'll want to account
 #for that when looking at top employers, to avoid double/triple counting
 
 agencyteams %>% 
-  select(namestring, most_recent_employment) %>% 
+  select(namestring, most_recent_employment_standardized) %>% 
   distinct() %>% 
-  count(most_recent_employment, sort = TRUE) %>% 
+  count(most_recent_employment_standardized, sort = TRUE) %>% 
   filter(n >= 3) %>% 
   gt() %>%
   tab_options(table.align = "left") 

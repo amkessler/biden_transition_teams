@@ -1,5 +1,6 @@
 library(tidyverse)
 library(janitor)
+library(readxl)
 library(writexl)
 
 #to run new scrape(s), uncomment out one or both of these lines
@@ -89,12 +90,30 @@ agencyteams %>%
   filter(most_recent_employment == "Georgetown University") 
 
 
-#create lookup table to use for employer standardization
+
+### Employer Standardization ####
+
+#create lookup table to work on separately for employer standardization
 forlookup <- agencyteams %>% 
   count(most_recent_employment)
 
+## use manually standardized lookup table to then match with
+standardization_lookup <- read_excel("processed_data/agencyreviewteam_standardization_lookup.xlsx")
 
+#join to main agencyteams table
+agencyteams <- left_join(agencyteams, standardization_lookup, by = "most_recent_employment")
 
+#move new columns further left
+agencyteams %>% 
+  select(1:5,
+         most_recent_employment_standardized,
+        
+                   
+
+#flag if any didn't join
+agencyteams %>% 
+  filter(is.na(most_recent_employment_standardized))
+  
 
 ### SAVE RESULTS #### 
 

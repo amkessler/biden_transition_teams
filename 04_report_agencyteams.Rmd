@@ -17,7 +17,7 @@ library(kableExtra)
 options(dplyr.summarise.inform = FALSE)
 
 #run the script for step 03 to update data files
-source("03_analysis.R")
+# source("03_analysis.R")
 
 
 #load data files from step 03
@@ -186,74 +186,22 @@ agencyteams %>%
 
 ```
 
+####
+**Top Employers for Team Leads Only**
 
+```{r, echo=FALSE}
 
-<!-- #### -->
-<!-- ### *Daily Totals* -->
-<!-- ```{r, echo=FALSE} -->
+#because some people are appointed to one team, we'll want to account
+#for that when looking at top employers, to avoid double/triple counting
 
-<!-- dailycount_byparty <- ga_runoff_tvads %>%  -->
-<!--   count(airdate, advertiser_party, name = "ad_count") %>%  -->
-<!--   # filter(airdate < "2020-11-23") -->
+agencyteams %>% 
+  filter(team_lead == "Y") %>% 
+  select(namestring, most_recent_employment_standardized) %>% 
+  distinct() %>% 
+  count(most_recent_employment_standardized, sort = TRUE) %>% 
+  filter(n > 1) %>%
+  gt() %>%
+  tab_options(table.align = "left") 
+ 
 
-<!-- #area chart by party -->
-<!-- ggplot(dailycount_byparty, aes(x = airdate, y = ad_count)) +  -->
-<!--   geom_col(aes(color = advertiser_party, fill = advertiser_party),  -->
-<!--             alpha = 0.5, position = position_dodge(preserve = "single")) + -->
-<!--   scale_color_manual(values = c("#00AFBB", "#F2785D")) + -->
-<!--   scale_fill_manual(values = c("#00AFBB", "#F2785D")) + -->
-<!--   labs(title = "Daily Count of Ad Spots, By Party",  -->
-<!--        subtitle = "", -->
-<!--        x = "", -->
-<!--        y = "") + -->
-<!--   theme_minimal() + -->
-<!--   theme(plot.title = element_text(hjust = 0.5)) + -->
-<!--   scale_y_continuous(labels = comma) -->
-
-
-
-<!-- ``` -->
-
-<!-- #### -->
-<!-- ```{r, echo=FALSE} -->
-
-<!-- dailycount_bycand <- ga_runoff_tvads %>%  -->
-<!--   count(airdate, advertiser, name = "ad_count") -->
-
-<!-- #bar chart for CANDIDATES -->
-<!-- ggplot(dailycount_bycand, aes(x = airdate, y = ad_count)) +  -->
-<!--   geom_col(aes(color = advertiser, fill = advertiser),  -->
-<!--            alpha = 0.5, position = position_dodge(preserve = "single")) + -->
-<!--   # scale_color_manual(values = c("#DC3A3A", "#4BAFD8", "#E8857E", "#2E90B8")) + -->
-<!--   # scale_fill_manual(values = c("#DC3A3A", "#4BAFD8", "#E8857E", "#2E90B8")) + -->
-<!--   labs(title = "Daily Count of Ad Spots, By Candidate",  -->
-<!--        subtitle = "", -->
-<!--        x = "", -->
-<!--        y = "") + -->
-<!--   theme_minimal() + -->
-<!--   theme(plot.title = element_text(hjust = 0.5)) + -->
-<!--   scale_y_continuous(labels = comma) -->
-
-
-<!-- ``` -->
-
-
-
-<!-- ```{r, echo=FALSE} -->
-
-
-
-
-<!-- ``` -->
-
-
-
-<!-- ```{r, echo=FALSE} -->
-
-
-
-
-<!-- ``` -->
-
-
-
+```

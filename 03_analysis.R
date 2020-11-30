@@ -146,4 +146,10 @@ agencyteams %>%
 
 #lookup file to standarize separately
 forlookup %>% 
-  write_xlsx("output/forlookup.csv")
+  write_xlsx("output/forlookup.xlsx")
+
+#list of those titled just "self-employed" for additional research
+agencyteams %>% 
+  filter(most_recent_employment_standardized == "SELF-EMPLOYED") %>% 
+  distinct(name, .keep_all = TRUE) %>% 
+  write_xlsx("output/selfemployed_tosearch.xlsx")

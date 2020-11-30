@@ -28,7 +28,7 @@ transition_data_previous
 #find new records of names added since previous
 newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
 
-newnames %>% View()
+newnames # %>% View()
 
 
 

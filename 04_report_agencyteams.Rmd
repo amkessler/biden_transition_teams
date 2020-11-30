@@ -17,7 +17,7 @@ library(kableExtra)
 options(dplyr.summarise.inform = FALSE)
 
 #run the script for step 03 to update data files
-# source("03_analysis.R")
+source("03_analysis.R")
 
 
 #load data files from step 03

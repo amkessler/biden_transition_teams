@@ -21,7 +21,7 @@ transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
 transition_data_current
 
 # load archived data to compare against
-transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_01t08_51.rds")
+transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_01t13_26.rds")
 # transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_25t09_34.rds")
 transition_data_previous
 
@@ -40,7 +40,7 @@ transition_data_previous %>%
 
 
 
-# Compare totals by department #######
+#### COMPARE TOTALS by department #######
 agencycount_current <- transition_data_current %>% 
   count(agency, name = "current_count")
 

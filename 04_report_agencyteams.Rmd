@@ -8,6 +8,8 @@ output:
     toc_float: true
     code_folding: hide
     # code_download: true
+    includes:
+      after_body: footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -209,3 +211,4 @@ agencyteams %>%
  
 
 ```
+

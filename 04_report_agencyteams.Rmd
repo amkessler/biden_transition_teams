@@ -2,7 +2,12 @@
 title: "Biden Transition - Agency Review Teams"
 author: "Aaron Kessler, Data/Investigations Team"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    # code_download: true
 ---
 
 ```{r setup, include=FALSE}
@@ -42,7 +47,6 @@ The names below reflect the currently available data as of **`r format(Sys.time(
 
 Here are the new names added to the agency review team lists since last time.  
 Note that some people may already be part of another team and/or assigned to multiple agency teams - they're marked below, as applicable.  
-  
   
 
 ```{r, echo=FALSE}

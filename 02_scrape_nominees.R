@@ -26,7 +26,7 @@ name1
 
 
 #grab the titles
-titles <- html_nodes(content(website1), "h4")
+titles <- html_nodes(content(website1), "span.acctext--con")
 #show them all
 print(html_text(titles, trim = TRUE))
 #show just one

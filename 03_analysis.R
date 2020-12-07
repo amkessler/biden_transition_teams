@@ -21,14 +21,14 @@ transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
 transition_data_current
 
 # load archived data to compare against
-transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_01t13_26.rds")
-# transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_25t09_34.rds")
+transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_07t10_17.rds")
+# transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_01t13_26.rds")
 transition_data_previous
 
 #find new records of names added since previous
 newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
 
-newnames %>% View()
+newnames 
 
 
 

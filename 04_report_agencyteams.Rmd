@@ -151,19 +151,6 @@ agencycount_compare %>%
 
 ```
 
-
-```{r, echo=FALSE}
-
-agencyteams %>% 
-  count(agency, sort = TRUE) %>% 
-  head(8) %>% 
-  gt() %>%
-  tab_options(table.align = "left") 
- 
-
-```
-
-
 ####
 The **smallest** agency review teams (less than five members) as of today are:
 

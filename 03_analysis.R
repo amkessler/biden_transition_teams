@@ -21,8 +21,7 @@ transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
 transition_data_current
 
 # load archived data to compare against
-transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_08t12_27.rds")
-# transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_01t13_26.rds")
+transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_12_10t11_47.rds")
 transition_data_previous
 
 #find new records of names added since previous

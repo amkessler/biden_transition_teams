@@ -56,24 +56,11 @@ Note that some people may already be part of another team and/or assigned to mul
 newnames %>% 
   select(agency, name, most_recent_employment, on_multiple_teams, team_lead) %>% 
   gt() %>%
-  # tab_header(
-  #   title = md("Ads Aired by **Party**"),
-  #   subtitle = "(From Nov. 4th)"
-  # ) %>% 
   tab_options(table.align = "left") %>%
   cols_align(
     align = "center",
     columns = vars(team_lead, on_multiple_teams)
-  ) # %>%
-  # fmt_number(
-  #   columns = vars(ads_aired),
-  #   decimals = 0,
-  #   use_seps = TRUE
-  # ) %>% 
-  # fmt_currency(
-  #   columns = vars(est_spent),
-  #   decimals = 0,
-  #   currency = "USD"
+  ) 
  
 
 ```
@@ -109,26 +96,10 @@ agencycount_compare %>%
       cell_text(color = "gray")
       ),
     locations = cells_body(
-      columns = vars(previous_count)
+      columns = vars(previous)
       )
   ) 
-  # tab_header(
-  #   title = md("Ads Aired by **Party**"),
-  #   subtitle = "(From Nov. 4th)"
-  # ) %>% 
-  # cols_align(
-  #   align = "center",
-  #   columns = vars(team_lead, on_multiple_teams)
-  # ) # %>%
-  # fmt_number(
-  #   columns = vars(ads_aired),
-  #   decimals = 0,
-  #   use_seps = TRUE
-  # ) %>% 
-  # fmt_currency(
-  #   columns = vars(est_spent),
-  #   decimals = 0,
-  #   currency = "USD"
+  
  
 
 ```
@@ -142,8 +113,8 @@ The **largest** agency review teams as of today are:
 ```{r, echo=FALSE}
 
 agencycount_compare %>% 
-  select(agency, current_count) %>% 
-  arrange(desc(current_count)) %>% 
+  select(agency, current) %>% 
+  arrange(desc(current)) %>% 
   head(8) %>% 
   gt() %>%
   tab_options(table.align = "left") 
@@ -152,14 +123,14 @@ agencycount_compare %>%
 ```
 
 ####
-The **smallest** agency review teams (less than five members) as of today are:
+The **smallest** agency review teams (less than six members) as of today are:
 
 ```{r, echo=FALSE}
 
 agencycount_compare %>% 
-  select(agency, current_count) %>% 
-  arrange(current_count) %>% 
-  filter(current_count < 5) %>% 
+  select(agency, current) %>% 
+  arrange(current) %>% 
+  filter(current < 6) %>% 
   gt() %>%
   tab_options(table.align = "left") 
  

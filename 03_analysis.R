@@ -95,10 +95,6 @@ agencyteams %>%
 
 ### Employer Standardization ####
 
-#create lookup table to work on separately for employer standardization
-forlookup <- agencyteams %>% 
-  count(most_recent_employment)
-
 ## use manually standardized lookup table to then match with
 standardization_lookup <- read_excel("processed_data/agencyreviewteam_standardization_lookup.xlsx")
 
@@ -113,9 +109,11 @@ agencyteams <- agencyteams %>%
          everything())
         
 #flag if any didn't join
-agencyteams %>% 
-  filter(is.na(most_recent_employment_standardized))
-  
+#create lookup table to add to existing standarization table
+forlookup <- agencyteams %>% 
+  filter(is.na(most_recent_employment_standardized)) %>% 
+  count(most_recent_employment)
+
 
 
 ### SAVE RESULTS #### 
@@ -146,12 +144,18 @@ agencyteams %>%
   select(-idstring, -namestring) %>% 
   write_xlsx("output/agencyreviewteams.xlsx")
 
+
+
 #lookup file to standarize separately
 forlookup %>% 
   write_xlsx("output/forlookup.xlsx")
+
 
 #list of those titled just "self-employed" for additional research
 agencyteams %>% 
   filter(most_recent_employment_standardized == "SELF-EMPLOYED") %>% 
   distinct(name, .keep_all = TRUE) %>% 
   write_xlsx("output/selfemployed_tosearch.xlsx")
+
+
+

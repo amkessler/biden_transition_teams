@@ -162,23 +162,18 @@ agencyteams %>%
 ```
 
 ####
-**Top Employers for Team Leads Only**
+**California people**
 
 ```{r, echo=FALSE}
 
-#because some people are appointed to one team, we'll want to account
-#for that when looking at top employers, to avoid double/triple counting
-
 agencyteams %>% 
-  filter(team_lead == "Y") %>% 
-  select(namestring, most_recent_employment_standardized) %>% 
-  distinct() %>% 
-  count(most_recent_employment_standardized, sort = TRUE) %>% 
-  filter(n > 1) %>%
-  gt() %>%
-  tab_options(table.align = "left") 
+  filter(str_detect(most_recent_employment_standardized, "CALIFORNIA")) %>% 
+  arrange(name) %>% 
+  write_csv("output/california.csv")
+  
  
 
 ```
+
 
 
